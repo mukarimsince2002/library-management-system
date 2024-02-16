@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\CatogaryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\PublisherController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,7 +34,10 @@ Route::middleware([
 });
 
 Route::resource('user', UserController::class);
+Route::resource('catogary',CatogaryController::class);
 
-Route::get('dashboard',function () {
-        return view('admin.dashboard');
-});
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::resource('books', BookController::class);
+Route::resource('authors', AuthorController::class);
+Route::resource('publishers', PublisherController::class);
+Route::resource('users', UserController::class);
