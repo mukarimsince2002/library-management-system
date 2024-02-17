@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\Catogary;
 use App\Traits\CrudOperations;
 
-class BookService
+class CatogaryService
 {
     use CrudOperations;
 

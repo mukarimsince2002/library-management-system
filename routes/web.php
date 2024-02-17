@@ -35,8 +35,8 @@ Route::middleware([
 
 Route::resource('user', UserController::class);
 Route::resource('catogary',CatogaryController::class);
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 Route::resource('books', BookController::class);
 Route::resource('authors', AuthorController::class);
 Route::resource('publishers', PublisherController::class);

@@ -15,7 +15,7 @@ class PublisherController extends Controller
 
     public function index()
     {
-        return $this->publisherService->getAllPublishers();
+        return $this->publisherService->index();
     }
 
     public function create()
@@ -25,26 +25,26 @@ class PublisherController extends Controller
 
     public function store(PublisherRequest $request)
     {
-        return $this->publisherService->createPublisher($request->validated());
+        return $this->publisherService->store($request->validated());
     }
 
     public function show($id)
     {
-        return $this->publisherService->getPublisherById($id);
+        return $this->publisherService->show($id);
     }
 
     public function edit($id)
     {
-        return $this->publisherService->editPublisher($id);
+        return $this->publisherService->edit($id);
     }
 
     public function update(PublisherRequest $request, $id)
     {
-        return $this->publisherService->updatePublisher($id, $request->validated());
+        return $this->publisherService->update($id, $request->validated());
     }
 
     public function destroy($id)
     {
-        return $this->publisherService->deletePublisher($id);
+        return $this->publisherService->destroy($id);
     }
 }

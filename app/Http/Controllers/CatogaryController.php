@@ -2,63 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CatogaryRequest;
+use App\Services\CatogaryService;
 use Illuminate\Http\Request;
 
 class CatogaryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $catogaryService;
+
+    public function __construct(CatogaryService $catogaryService)
+    {
+        $this->catogaryService= $catogaryService;
+    }
+
     public function index()
     {
-        return view('admin.catogary');
+        $genres = $this->catogaryService->index();
+        return view('admin.genres.index', compact('genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.genres.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(CatogaryRequest $request)
     {
-        //
+        $this->catogaryService->store($request->validated());
+        return redirect()->route('admin.genres.index')->with('success', 'Category created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit($id)
     {
-        //
+        $genre = $this->catogaryService->edit($id);
+        return view('admin.genres.edit', compact('genre'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(CatogaryRequest $request, $id)
     {
-        //
+        $this->catogaryService->update($id, $request->validated());
+        return redirect()->route('genres.index')->with('success', 'Category updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $this->catogaryService->destroy($id);
+        return redirect()->route('genres.index')->with('success', 'Category deleted successfully.');
     }
 }

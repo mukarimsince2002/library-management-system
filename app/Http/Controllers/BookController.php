@@ -18,35 +18,35 @@ class CategoryController extends Controller
     public function index()
     {
         $bookS = $this->bookService->index();
-        return view('categories.index', compact('book'));
+        return view('catogaries.index', compact('book'));
     }
 
     public function create()
     {
-        return view('categories.create');
+        return view('catogaries.create');
     }
 
     public function store(BookRequest $request)
     {
         $this->bookService->store($request->validated());
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route('catogaries.index')->with('success', 'Category created successfully.');
     }
 
     public function edit($id)
     {
         $book = $this->bookService->edit($id);
-        return view('categories.edit', compact('book'));
+        return view('catogaries.edit', compact('book'));
     }
 
     public function update(BookRequest $request, $id)
     {
         $this->bookService->update($id, $request->validated());
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('catogaries.index')->with('success', 'Category updated successfully.');
     }
 
     public function destroy($id)
     {
         $this->bookService->destroy($id);
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return redirect()->route('catogaries.index')->with('success', 'Category deleted successfully.');
     }
 }

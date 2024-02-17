@@ -174,12 +174,12 @@
 
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
+                    <a href="{{ route('users.create') }}" class="menu-link">
                       <div data-i18n="Add Users">Add Users</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
+                    <a href="{{ route('users.index') }}" class="menu-link">
                       <div data-i18n="view Users">view Users</div>
                     </a>
                   </li>
@@ -187,25 +187,12 @@
               </li>
 
             <!-- Layouts -->
-            <li class="menu-item">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="catogaries">catogaries</div>
-              </a>
-
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div data-i18n="Add Catogary">Add Catogary</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div data-i18n="view Catogary">view Catogary</div>
-                  </a>
-                </li>
-              </ul>
-            </li>
+            <li class="menu-item active">
+                <a href="{{ route('catogary.index') }}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Analytics">Catogaries</div>
+                </a>
+              </li>
 
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">user's suggestion</span>

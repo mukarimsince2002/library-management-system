@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\User;
+use App\Models\Author;
 use App\Traits\CrudOperations;
 
-class UserService
+class AuthorService
 {
     use CrudOperations;
 
 
     protected $model;
 
-    public function __construct(User $user)
+    public function __construct(Author $author)
     {
-        $this->model = $user;
+        $this->model = $author;
     }
 }

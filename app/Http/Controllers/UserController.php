@@ -14,36 +14,41 @@ class UserController extends Controller
 
     public function index()
     {
-        return $this->userService->getAllUsers();
+        $users = $this->userService->index();
+        return view('admin.users.index', compact('users'));
     }
 
     public function create()
     {
-        // Logic for showing the create form
+        return view('admin.users.create');
     }
 
     public function store(UserRequest $request)
     {
-        return $this->userService->createUser($request->validated());
+        $this->userService->store($request->validated());
+        return redirect()->route('users.index')->with('message', 'Category created successfully.');
     }
 
     public function show($id)
     {
-        return $this->userService->getUserById($id);
+        return $this->userService->show($id);
     }
 
     public function edit($id)
     {
-        return $this->userService->editUser($id);
+        $user = $this->userService->edit($id);
+        return view('admin.users.edit', compact('user'));
     }
 
     public function update(UserRequest $request, $id)
     {
-        return $this->userService->updateUser($id, $request->validated());
+        $this->userService->update($id, $request->validated());
+        return redirect()->route('users.index')->with('message', 'Category updated successfully.');
     }
 
     public function destroy($id)
     {
-        return $this->userService->deleteUser($id);
+        $this->userService->destroy($id);
+        return redirect()->route('users.index')->with('message', 'Category deleted successfully.');
     }
 }

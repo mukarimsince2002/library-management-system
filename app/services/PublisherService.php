@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\Book;
+use App\Models\Publisher;
 use App\Traits\CrudOperations;
 
-class BookService
+class PublisherService
 {
     use CrudOperations;
 
 
     protected $model;
 
-    public function __construct(Book $book)
+    public function __construct(Publisher $publisher)
     {
-        $this->model = $book;
+        $this->model = $publisher;
     }
 }
