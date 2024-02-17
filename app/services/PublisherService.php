@@ -1,51 +1,19 @@
 <?php
-// app/Services/PublishersService.php
 
 namespace App\Services;
 
-use App\Models\Publishers;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Book;
+use App\Traits\CrudOperations;
 
-class PublishersService
+class BookService
 {
-    public function getAllPublisherss()
-    {
-        return Publishers::all();
-    }
+    use CrudOperations;
 
-    public function getPublishersById($id)
-    {
-        try {
-            return Publishers::findOrFail($id);
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Publishers not found");
-        }
-    }
 
-    public function createPublishers($data)
-    {
-        return Publishers::create($data);
-    }
+    protected $model;
 
-    public function updatePublishers($id, $data)
+    public function __construct(Book $book)
     {
-        try {
-            $Publishers = Publishers::findOrFail($id);
-            $Publishers->update($data);
-            return $Publishers;
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Publishers not found");
-        }
-    }
-
-    public function deletePublishers($id)
-    {
-        try {
-            $Publishers = Publishers::findOrFail($id);
-            $Publishers->delete();
-            return $Publishers;
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Publishers not found");
-        }
+        $this->model = $book;
     }
 }

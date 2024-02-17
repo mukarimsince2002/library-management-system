@@ -1,87 +1,52 @@
 <?php
-// app/Http/Controllers/BookController.php
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Services\BookService;
 use App\Http\Requests\BookRequest;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\BookService;
+use Illuminate\Http\Request;
 
-class BookController extends Controller
+class CategoryController extends Controller
 {
     protected $bookService;
 
     public function __construct(BookService $bookService)
     {
-        $this->bookService = $bookService;
+        $this->bookService= $bookService;
     }
 
     public function index()
     {
-        try {
-            $books = $this->bookService->getAllBooks();
-            return response()->json(['message' => 'Books retrieved successfully', 'books' => $books]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $bookS = $this->bookService->index();
+        return view('categories.index', compact('book'));
     }
 
-    public function show($id)
+    public function create()
     {
-        try {
-            $book = $this->bookService->getBookById($id);
-            return response()->json(['message' => 'Book retrieved successfully', 'book' => $book]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
-    }
-
-    public function edit($id)
-    {
-        try {
-            $book = $this->bookService->getBookById($id);
-            return response()->json(['message' => 'Book retrieved successfully', 'book' => $book]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
+        return view('categories.create');
     }
 
     public function store(BookRequest $request)
     {
-        $data = $request->validated();
+        $this->bookService->store($request->validated());
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+    }
 
-        try {
-            $book = $this->bookService->createBook($data);
-            return response()->json(['message' => 'Book created successfully', 'book' => $book]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+    public function edit($id)
+    {
+        $book = $this->bookService->edit($id);
+        return view('categories.edit', compact('book'));
     }
 
     public function update(BookRequest $request, $id)
     {
-        $data = $request->validated();
-
-        try {
-            $book = $this->bookService->updateBook($id, $data);
-            return response()->json(['message' => 'Book updated successfully', 'book' => $book]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Book not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $this->bookService->update($id, $request->validated());
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     public function destroy($id)
     {
-        try {
-            $book = $this->bookService->deleteBook($id);
-            return response()->json(['message' => 'Book deleted successfully']);
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Book not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $this->bookService->destroy($id);
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

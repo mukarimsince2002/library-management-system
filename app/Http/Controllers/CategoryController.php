@@ -1,44 +1,52 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Services\CategoryService;
+use App\Http\Requests\BookRequest;
+use App\Services\BookService;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    protected $categoryService;
+    protected $bookService;
 
-    public function __construct(CategoryService $categoryService)
+    public function __construct(BookService $bookService)
     {
-        $this->categoryService = $categoryService;
+        $this->bookService= $bookService;
     }
 
     public function index()
     {
-        return $this->categoryService->getAllCategories();
+        $bookS = $this->bookService->index();
+        return view('categories.index', compact('book'));
     }
 
-    public function store(CategoryRequest $request)
+    public function create()
     {
-        return $this->categoryService->createCategory($request->validated());
+        return view('categories.create');
     }
 
-    public function show($id)
+    public function store(BookRequest $request)
     {
-        return $this->categoryService->getCategoryById($id);
+        $this->bookService->store($request->validated());
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
+
     public function edit($id)
     {
-        return $this->categoryService->editCategory($id);
+        $book = $this->bookService->edit($id);
+        return view('categories.edit', compact('book'));
     }
 
-    public function update(CategoryRequest $request, $id)
+    public function update(BookRequest $request, $id)
     {
-        return $this->categoryService->updateCategory($id, $request->validated());
+        $this->bookService->update($id, $request->validated());
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     public function destroy($id)
     {
-        return $this->categoryService->deleteCategory($id);
+        $this->bookService->destroy($id);
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }
 }

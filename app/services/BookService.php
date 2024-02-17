@@ -1,51 +1,19 @@
 <?php
-// app/Services/BookService.php
 
 namespace App\Services;
 
 use App\Models\Book;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Traits\CrudOperations;
 
 class BookService
 {
-    public function getAllBooks()
-    {
-        return Book::all();
-    }
+    use CrudOperations;
 
-    public function getBookById($id)
-    {
-        try {
-            return Book::findOrFail($id);
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Book not found");
-        }
-    }
 
-    public function createBook($data)
-    {
-        return Book::create($data);
-    }
+    protected $model;
 
-    public function updateBook($id, $data)
+    public function __construct(Book $book)
     {
-        try {
-            $book = Book::findOrFail($id);
-            $book->update($data);
-            return $book;
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Book not found");
-        }
-    }
-
-    public function deleteBook($id)
-    {
-        try {
-            $book = Book::findOrFail($id);
-            $book->delete();
-            return $book;
-        } catch (ModelNotFoundException $exception) {
-            throw new \Exception("Book not found");
-        }
+        $this->model = $book;
     }
 }
