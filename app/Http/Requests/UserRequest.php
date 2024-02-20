@@ -17,6 +17,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
+            'profile_photo_path'=>'required|mimes:jpg,png,jpeg',
             // Add more validation rules as needed
         ];
     }

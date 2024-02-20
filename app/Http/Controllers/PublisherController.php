@@ -1,11 +1,16 @@
 <?php
+
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\PublisherRequest;
-use App\Services\PublisherService;
+use App\Services\PublisherService; // Import the ImageUploadTrait
+use App\Models\Publisher;
 
 class PublisherController extends Controller
 {
+
+
     protected $publisherService;
 
     public function __construct(PublisherService $publisherService)
@@ -15,17 +20,20 @@ class PublisherController extends Controller
 
     public function index()
     {
-        return $this->publisherService->index();
+        $publishers = $this->publisherService->index();
+        return view('admin.publishers.index', compact('publishers'));
     }
 
     public function create()
     {
-        // Logic for showing the create form
+        return view('admin.publishers.create');
     }
 
     public function store(PublisherRequest $request)
     {
-        return $this->publisherService->store($request->validated());
+        $data = $request->validated();
+        $this->publisherService->store($data);
+        return redirect()->route('publishers.index')->with('message', 'User created successfully.');
     }
 
     public function show($id)
@@ -35,16 +43,24 @@ class PublisherController extends Controller
 
     public function edit($id)
     {
-        return $this->publisherService->edit($id);
+        $publisher = $this->publisherService->edit($id);
+        return view('admin.publishers.edit', compact('publisher'));
     }
 
     public function update(PublisherRequest $request, $id)
     {
-        return $this->publisherService->update($id, $request->validated());
+        $data = $request->validated();
+        $this->publisherService->update($id, $data);
+        return redirect()->route('publishers.index')->with('message', 'publisher updated successfully.');
     }
 
     public function destroy($id)
-    {
-        return $this->publisherService->destroy($id);
-    }
+{
+    // Delete the user
+    $this->publisherService->destroy($id);
+
+    return redirect()->route('publishers.index')->with('message', 'publisher deleted successfully.');
+}
+
+
 }

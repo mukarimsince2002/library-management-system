@@ -1,25 +1,31 @@
 <?php
-// app/Traits/ImageUploadTrait.php
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\File;
+
 trait ImageUploadTrait
 {
-    public function uploadImage($image, $folder)
+
+    private function uploadPhoto($image, $folder)
     {
         $imageName = time().'.'.$image->getClientOriginalExtension();
         $image->move(public_path('uploads/'.$folder), $imageName);
         return 'uploads/'.$folder.'/'.$imageName;
     }
-    
-    public function updateImage($image, $folder, $oldImageName = null)
-{
-    if($oldImageName) {
+
+    private function updatePhoto($image, $folder, $oldImageName=NULL)
+    {
         $this->deleteImage($oldImageName);
+        return $this->uploadPhoto($image, $folder);
     }
-    $imageName = time().'.'.$image->getClientOriginalExtension();
-    $image->move(public_path('uploads/'.$folder), $imageName);
-    return 'uploads/'.$folder.'/'.$imageName;
-}
+
+    private function deleteImage($imageName)
+    {
+        if ($imageName && File::exists(public_path($imageName))) {
+            File::delete(public_path($imageName));
+        }
+    }
+
 
 }

@@ -41,7 +41,7 @@
             <br/>
             <div class="form-group">
                 <label for="photo">Photo</label>
-                <input type="file" class="form-control-file" id="photo" name="photo">
+                <input type="file" class="form-control-file" id="photo" name="profile_photo_path">
             </div>
             <br/>
             <div>

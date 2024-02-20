@@ -141,12 +141,12 @@
 
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="layouts-without-menu.html" class="menu-link">
+                    <a href="{{ route('books.create') }}" class="menu-link">
                       <div data-i18n="add books">Add Books</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="layouts-without-navbar.html" class="menu-link">
+                    <a href="{{ route('books.index') }}" class="menu-link">
                       <div data-i18n="view books">view Books</div>
                     </a>
                   </li>
@@ -190,7 +190,21 @@
             <li class="menu-item active">
                 <a href="{{ route('catogary.index') }}" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                  <div data-i18n="Analytics">Catogaries</div>
+                  <div data-i18n="Catogaries">Catogaries</div>
+                </a>
+              </li>
+
+            <li class="menu-item active">
+                <a href="{{ route('membership.index') }}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Members">Members</div>
+                </a>
+              </li>
+
+            <li class="menu-item active">
+                <a href="{{ route('membership_type.index') }}" class="menu-link">
+                  <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                  <div data-i18n="Membership_type">Membership Type</div>
                 </a>
               </li>
 

@@ -1,10 +1,17 @@
 <?php
+
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
+use App\Traits\ImageUploadTrait; // Import the ImageUploadTrait
+use App\Models\User;
 
 class UserController extends Controller
 {
+     Use  ImageUploadTrait;
+
     protected $userService;
 
     public function __construct(UserService $userService)
@@ -25,8 +32,17 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $this->userService->store($request->validated());
-        return redirect()->route('users.index')->with('message', 'Category created successfully.');
+        $data = $request->validated();
+        if ($request->hasFile('profile_photo_path')) {
+            $data['profile_photo_path'] = $this->uploadPhoto($request->file('profile_photo_path'), 'user_photos');
+
+        }
+
+
+       $data['password'] = Hash::make($request->input('password'));
+
+        $this->userService->store($data);
+        return redirect()->route('users.index')->with('message', 'User created successfully.');
     }
 
     public function show($id)
@@ -42,13 +58,30 @@ class UserController extends Controller
 
     public function update(UserRequest $request, $id)
     {
-        $this->userService->update($id, $request->validated());
-        return redirect()->route('users.index')->with('message', 'Category updated successfully.');
+        $data = $request->validated();
+        if ($request->hasFile('profile_photo_path')) {
+            $user = $this->userService->edit($id);
+            $oldImage = $user->photo;
+            $data['profile_photo_path'] = $this->updatePhoto($request->file('profile_photo_path'), 'user_photos', $oldImage);
+        }
+        $data['password'] = Hash::make($request->input('password'));
+        $this->userService->update($id, $data);
+        return redirect()->route('users.index')->with('message', 'User updated successfully.');
     }
 
     public function destroy($id)
-    {
-        $this->userService->destroy($id);
-        return redirect()->route('users.index')->with('message', 'Category deleted successfully.');
-    }
+{
+    // Get the user by ID
+    $user = User::findOrFail($id);
+
+    // Delete the user's image
+    $this->deleteImage($user->profile_photo_path);
+
+    // Delete the user
+    $this->userService->destroy($id);
+
+    return redirect()->route('users.index')->with('message', 'User deleted successfully.');
+}
+
+
 }

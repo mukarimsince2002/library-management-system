@@ -7,6 +7,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\MembershipTypeController;
+use App\Models\Genre;
+use App\Models\Membership;
+use App\Models\Publisher;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +47,8 @@ Route::resource('books', BookController::class);
 Route::resource('authors', AuthorController::class);
 Route::resource('publishers', PublisherController::class);
 Route::resource('users', UserController::class);
+Route::resource('genres', GenreController::class);
+Route::resource('membership',  Membership::class);
+Route::resource('membership_type',  MembershipTypeController::class);
+
+
