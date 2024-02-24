@@ -5,10 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Membership Types</div>
+                <div class="card-header float-end"> Membership Types</div>
 
                 <div class="card-body">
-                    <a href="{{ route('membership_type.create') }}" class="btn btn-primary mb-3">Create Membership Type</a>
+                    <a href="{{ route('membership_type.create') }}" class="btn btn-primary mb-3 float-end">Add Membership Type</a>
 
                     <table class="table">
                         <thead>
@@ -29,7 +29,11 @@
                                 <td>{{ $membershipType->fee }}</td>
                                 <td>
                                     <a href="{{ route('membership_type.edit', $membershipType->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <!-- Add delete functionality here -->
+                                    <form action="{{ route('membership_type.destroy', $publisher->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

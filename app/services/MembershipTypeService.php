@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\MembershipType;
 use App\Traits\CrudOperations;
 
-class Membership_typeService
+class MembershipTypeService
 {
     use CrudOperations;
 

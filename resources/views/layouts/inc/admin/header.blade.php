@@ -207,7 +207,6 @@
                   <div data-i18n="Membership_type">Membership Type</div>
                 </a>
               </li>
-
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">user's suggestion</span>
             </li>

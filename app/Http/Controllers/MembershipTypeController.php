@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Membership_typeRequest;
+use App\Http\Requests\MembershipTypeRequest;
 use App\Models\MembershipType;
-use App\Services\Membership_typeService;
+use App\Services\MembershipTypeService;
 
 class MembershipTypeController extends Controller
 {
@@ -12,7 +12,7 @@ class MembershipTypeController extends Controller
 
     protected $membership_typeService;
 
-    public function __construct(Membership_typeService $membership_typeService)
+    public function __construct(MembershipTypeService $membership_typeService)
     {
         $this->membership_typeService = $membership_typeService;
     }
@@ -20,19 +20,19 @@ class MembershipTypeController extends Controller
     public function index()
     {
         $membershipTypes = $this->membership_typeService->index();
-        return view('admin.genres.index', compact('membershipTypes'));
+        return view('admin.membership_type.index', compact('membershipTypes'));
     }
 
     public function create()
     {
-        return view('admin.genres.create');
+        return view('admin.membership_type.create');
     }
 
-    public function store(Membership_typeRequest $request)
+    public function store(MembershipTypeRequest $request)
     {
         $data = $request->validated();
         $this->membership_typeService->store($data);
-        return redirect()->route('genres.index')->with('message', 'User created successfully.');
+        return redirect()->route('membership_type.index')->with('message', 'User created successfully.');
     }
 
     public function show($id)
@@ -43,14 +43,14 @@ class MembershipTypeController extends Controller
     public function edit($id)
     {
         $membershipType = $this->membership_typeService->edit($id);
-        return view('admin.genres.edit', compact('membershipType'));
+        return view('admin.membership_type.edit', compact('membershipType'));
     }
 
-    public function update(Membership_typeRequest $request, $id)
+    public function update(MembershipTypeRequest $request, $id)
     {
         $data = $request->validated();
         $this->membership_typeService->update($id, $data);
-        return redirect()->route('genres.index')->with('message', 'publisher updated successfully.');
+        return redirect()->route('membership_type.index')->with('message', 'publisher updated successfully.');
     }
 
     public function destroy($id)
@@ -58,7 +58,7 @@ class MembershipTypeController extends Controller
     // Delete the user
     $this->membership_typeService->destroy($id);
 
-    return redirect()->route('genres.index')->with('message', 'publisher deleted successfully.');
+    return redirect()->route('membership_type.index')->with('message', 'publisher deleted successfully.');
 }
 
 
